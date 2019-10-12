@@ -1,28 +1,6 @@
-import bcal
 from bear import Bear, Bearror
 import pytest
 import uuid
-
-
-# -----------------------------------------------------------------------------
-@pytest.fixture
-def fx_diary_pg():
-    """
-    Create a function that will take arg *ov_date* (a dt obj) to determine
-    whether to create a page for the test or not.
-    """
-    data = {'nid': None}
-
-    def dp_setup(ov_date=None):
-        if ov_date:
-           data['nid'] = bcal.create_diary_page(ov_date)
-
-    data['setup'] = dp_setup
-
-    yield data
-
-    cub = Bear()
-    cub.trash(id=data['nid'])
 
 
 # -----------------------------------------------------------------------------

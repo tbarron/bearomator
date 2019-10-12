@@ -14,7 +14,7 @@ Questions
 """
 import base64
 from bear import Bear, Bearror
-from bear.util import comma
+# from bear.util import comma
 from fixtures import tnt                                           # noqa: F401
 import pytest
 import random
@@ -183,7 +183,7 @@ def test_add_text_bt_g_app(tnt):                                   # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(title=tnt["title"], mode="append",
-                               text="", tags=comma(tnt["addtags"]))
+                               text="", tags=comma_join(tnt["addtags"]))
     for tag in tnt["addtags"]:
         assert tag not in tnt["pre"]
         assert tag in post["note"]
@@ -199,7 +199,7 @@ def test_add_text_bt_g_pre(tnt):                                   # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(title=tnt["title"], mode="prepend",
-                               text="", tags=comma(tnt["addtags"]))
+                               text="", tags=comma_join(tnt["addtags"]))
     for tag in tnt["addtags"]:
         assert tag not in tnt["pre"]
         assert tag in post["note"]
@@ -215,7 +215,7 @@ def test_add_text_bt_g_rep(tnt):                                   # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(title=tnt['title'], mode="replace",
-                               text="", tags=comma(tnt["addtags"]))
+                               text="", tags=comma_join(tnt["addtags"]))
     for tag in tnt["addtags"]:
         assert tag not in tnt["pre"]
         assert tag in post["note"]
@@ -230,7 +230,7 @@ def test_add_text_bt_g_ral(tnt):                                   # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(title=tnt['title'], mode="replace_all",
-                               text="", tags=comma(tnt["addtags"]))
+                               text="", tags=comma_join(tnt["addtags"]))
     for tag in tnt["addtags"]:
         assert tag not in tnt["pre"]
         assert tag in post["note"]
@@ -297,7 +297,7 @@ def test_add_text_bi_g_app(tnt):                                   # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], mode="append", text="",
-                               tags=comma(tnt["addtags"]))
+                               tags=comma_join(tnt["addtags"]))
     assert hashed(tnt["addtags"]) not in tnt["pre"]
     assert "\n".join([tnt["hdr"],
                       tnt["body"],
@@ -311,7 +311,7 @@ def test_add_text_bi_g_pre(tnt):                                   # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], mode="prepend", text="",
-                               tags=comma(tnt["addtags"]))
+                               tags=comma_join(tnt["addtags"]))
     assert hashed(tnt["addtags"]) not in tnt["pre"]
     assert "\n".join([tnt["hdr"],
                       hashed(tnt["addtags"]),
@@ -325,7 +325,7 @@ def test_add_text_bi_g_rep(tnt):                                   # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], mode="replace", text="",
-                               tags=comma(tnt["addtags"]))
+                               tags=comma_join(tnt["addtags"]))
     assert hashed(tnt["addtags"]) not in tnt["pre"]
     assert "\n".join([tnt["hdr"], hashed(tnt["addtags"])]) in post["note"]
     assert tnt["body"] not in post["note"]
@@ -338,7 +338,7 @@ def test_add_text_bi_g_ral(tnt):                                   # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], mode="replace_all",
-                               text="", tags=comma(tnt["addtags"]))
+                               text="", tags=comma_join(tnt["addtags"]))
     assert hashed(tnt["addtags"]) not in tnt["pre"]
     assert hashed(tnt["addtags"]) in post["note"]
     assert tnt["hdr"] not in post["note"]
@@ -355,7 +355,8 @@ def test_add_text_bi_xg_app(tnt):                                  # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], mode="append",
-                               text=tnt["addtext"], tags=comma(tnt["addtags"]))
+                               text=tnt["addtext"],
+                               tags=comma_join(tnt["addtags"]))
     for item in [hashed(tnt["addtags"]), tnt["addtext"]]:
         assert item not in tnt["pre"]
     assert "\n".join([tnt["hdr"], tnt["body"], tnt["addtext"], "",
@@ -372,7 +373,8 @@ def test_add_text_bi_xg_pre(tnt):                                  # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], mode="prepend",
-                               text=tnt["addtext"], tags=comma(tnt["addtags"]))
+                               text=tnt["addtext"],
+                               tags=comma_join(tnt["addtags"]))
     for item in [hashed(tnt["addtags"]), tnt["addtext"]]:
         assert item not in tnt["pre"]
     assert "\n".join([tnt["hdr"], tnt["addtext"], "",
@@ -389,7 +391,8 @@ def test_add_text_bi_xg_rep(tnt):                                  # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], mode="replace",
-                               text=tnt["addtext"], tags=comma(tnt["addtags"]))
+                               text=tnt["addtext"],
+                               tags=comma_join(tnt["addtags"]))
     for item in [hashed(tnt["addtags"]), tnt["addtext"]]:
         assert item not in tnt["pre"]
     assert "\n".join([tnt["hdr"], tnt["addtext"], "",
@@ -407,7 +410,8 @@ def test_add_text_bi_xg_ral(tnt):                                  # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], mode="replace_all",
-                               text=tnt["addtext"], tags=comma(tnt["addtags"]))
+                               text=tnt["addtext"],
+                               tags=comma_join(tnt["addtags"]))
     for item in [hashed(tnt["addtags"]), tnt["addtext"]]:
         assert item not in tnt["pre"]
     assert "\n".join([tnt["addtext"], "",
@@ -474,7 +478,7 @@ def test_add_text_bit_g_app(tnt):                                  # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], title=tnt["title"], mode="append",
-                               text="", tags=comma(tnt["addtags"]))
+                               text="", tags=comma_join(tnt["addtags"]))
     assert hashed(tnt["addtags"]) not in tnt["pre"]
     assert nljoin(tnt["hdr"], tnt["body"],
                   hashed(tnt["addtags"])) in post["note"]
@@ -487,7 +491,7 @@ def test_add_text_bit_g_pre(tnt):                                  # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], title=tnt["title"], text="",
-                               mode="prepend", tags=comma(tnt["addtags"]))
+                               mode="prepend", tags=comma_join(tnt["addtags"]))
     assert hashed(tnt["addtags"]) not in tnt["pre"]
     assert nljoin(tnt["hdr"],
                   hashed(tnt["addtags"]), tnt["body"]) in post["note"]
@@ -500,7 +504,7 @@ def test_add_text_bit_g_rep(tnt):                                  # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], title=tnt["title"], text="",
-                               mode="replace", tags=comma(tnt["addtags"]))
+                               mode="replace", tags=comma_join(tnt["addtags"]))
     assert hashed(tnt["addtags"]) not in tnt["pre"]
     assert nljoin(tnt["hdr"], hashed(tnt["addtags"])) in post["note"]
     assert tnt["body"] not in post["note"]
@@ -513,7 +517,8 @@ def test_add_text_bit_g_ral(tnt):                                  # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], title=tnt["title"], text="",
-                               mode="replace_all", tags=comma(tnt["addtags"]))
+                               mode="replace_all",
+                               tags=comma_join(tnt["addtags"]))
     assert hashed(tnt["addtags"]) not in tnt["pre"]
     assert hashed(tnt["addtags"]) in post["note"]
     assert tnt["hdr"] not in post["note"]
@@ -527,7 +532,8 @@ def test_add_text_bit_xg_app(tnt):                                 # noqa: F811
     """
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], title=tnt["title"], mode="append",
-                               text=tnt["addtext"], tags=comma(tnt["addtags"]))
+                               text=tnt["addtext"],
+                               tags=comma_join(tnt["addtags"]))
     for item in [hashed(tnt["addtags"]), tnt["addtext"]]:
         assert item not in tnt["pre"]
     assert nljoin(tnt["hdr"], tnt["body"], tnt["addtext"], "",
@@ -542,7 +548,8 @@ def test_add_text_bit_xg_pre(tnt):                                 # noqa: F811
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], title=tnt["title"],
                                mode="prepend",
-                               text=tnt["addtext"], tags=comma(tnt["addtags"]))
+                               text=tnt["addtext"],
+                               tags=comma_join(tnt["addtags"]))
     for item in [hashed(tnt["addtags"]), tnt["addtext"]]:
         assert item not in tnt["pre"]
     assert nljoin(tnt["hdr"], tnt["addtext"], "", hashed(tnt["addtags"]),
@@ -557,7 +564,8 @@ def test_add_text_bit_xg_rep(tnt):                                 # noqa: F811
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], title=tnt["title"],
                                mode="replace",
-                               text=tnt["addtext"], tags=comma(tnt["addtags"]))
+                               text=tnt["addtext"],
+                               tags=comma_join(tnt["addtags"]))
     for item in [hashed(tnt["addtags"]), tnt["addtext"]]:
         assert item not in tnt["pre"]
     assert nljoin(tnt["hdr"], tnt["addtext"], "",
@@ -573,7 +581,8 @@ def test_add_text_bit_xg_ral(tnt):                                 # noqa: F811
     pytest.dbgfunc()
     post = tnt["cub"].add_text(id=tnt["id"], title=tnt["title"],
                                text=tnt["addtext"],
-                               mode="replace_all", tags=comma(tnt["addtags"]))
+                               mode="replace_all",
+                               tags=comma_join(tnt["addtags"]))
     for item in [hashed(tnt["addtags"]), tnt["addtext"]]:
         assert item not in tnt["pre"]
     assert nljoin(tnt["addtext"], "", hashed(tnt["addtags"])) in post["note"]
@@ -707,7 +716,7 @@ def test_open_note_id_fail(tnt):                                   # noqa: F811
     pytest.dbgfunc()
     with pytest.raises(Bearror) as err:
         tnt["cub"].open_note(id=tnt["id"] + "xxx")
-    assert "The note could not be found" in str(err)
+    assert "The note could not be found" in str(err.value)
 
 
 # -----------------------------------------------------------------------------
@@ -729,7 +738,7 @@ def test_open_note_title_fail(tnt):                                # noqa: F811
     pytest.dbgfunc()
     with pytest.raises(Bearror) as err:
         tnt["cub"].open_note(title=tnt["title"] + "foobar")
-    assert "The note could not be found" in str(err)
+    assert "The note could not be found" in str(err.value)
 
 
 # -----------------------------------------------------------------------------
@@ -751,7 +760,7 @@ def test_open_tag_fail():
     cub = Bear()
     with pytest.raises(Bearror) as err:
         cub.open_tag(name="no such tag")
-    assert "Tag 'no such tag' was not found" in str(err)
+    assert "Tag 'no such tag' was not found" in str(err.value)
 
 
 # -----------------------------------------------------------------------------
@@ -781,6 +790,14 @@ def test_trash(tnt):                                               # noqa: F811
 
     note = tnt["cub"].open_note(id=tnt["id"], exclude_trashed="no")
     assert note["is_trashed"] == "yes"
+
+
+# -----------------------------------------------------------------------------
+def comma_join(tag_l):
+    """
+    Return a string consisting of the input list concatenated with comma
+    """
+    return ','.join(tag_l)
 
 
 # -----------------------------------------------------------------------------
