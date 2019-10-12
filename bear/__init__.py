@@ -2,6 +2,7 @@ import json
 import os
 import re
 import tbx
+from bear import verinfo
 
 """
 a - entry added
@@ -28,6 +29,13 @@ e - function tested
 /trash            + + + +
 /untagged         + + +
 """
+
+
+def version():
+    """
+    Return version info at the module level
+    """
+    return verinfo._v
 
 
 class Bear(object):
@@ -679,6 +687,14 @@ class Bear(object):
             bear://x-callback-url/untagged?search=home
         """
         pass
+
+    # -------------------------------------------------------------------------
+    @classmethod
+    def version(cls):
+        """
+        Return version info at the object instance level
+        """
+        return verinfo._v
 
     # -------------------------------------------------------------------------
     def _token(self):
